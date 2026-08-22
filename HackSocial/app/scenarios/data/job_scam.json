@@ -1,0 +1,62 @@
+{
+  "id": "job-scam-01",
+  "title": "Remote Job Offer",
+  "category": "employment",
+  "difficulty": "intermediate",
+  "classification": "SCAM",
+  "base_risk": 80,
+  "context": "A recruiting message from a fictional company, 'Brightpath Global Recruiting', offering a high-paying remote job.",
+  "target_learning_objectives": [
+    "Recognize advance-fee job scams",
+    "Learn to independently verify an employer before paying anything"
+  ],
+  "manipulation_techniques": ["reciprocity", "social_proof", "financial_pressure"],
+  "allowed_stages": ["CONTACT", "RAPPORT", "REQUEST", "ESCALATION"],
+  "initial_message": "Hi! I'm a recruiter with Brightpath Global Recruiting. We came across your profile and think you'd be a great fit for a remote data entry role paying $38/hour, flexible hours. Interested in hearing more?",
+  "script": [
+    {
+      "stage": "RAPPORT",
+      "message": "Great! You've been shortlisted. We're excited to have you — we'll even include a $200 signing bonus with your first paycheck. To get you set up, we just need to arrange your starter equipment kit.",
+      "technique": "reciprocity"
+    },
+    {
+      "stage": "REQUEST",
+      "message": "The starter kit (laptop software license + onboarding materials) costs $250, which is fully reimbursed in your first paycheck. Please send the $250 to our onboarding account today so we can ship everything out.",
+      "technique": "financial_pressure"
+    },
+    {
+      "stage": "ESCALATION",
+      "message": "Just so you know, we have a few other applicants ready to pay and start today if this spot isn't confirmed soon. I'd hate for you to lose the offer over a small delay!",
+      "technique": "social_proof"
+    }
+  ],
+  "expected_red_flags": [
+    "Payment required before employment begins",
+    "Urgency created by competing applicants",
+    "Vague company details and no formal interview"
+  ],
+  "safe_verification_actions": [
+    "Search for the company's registration and reviews online",
+    "Ask for a formal offer letter and verify the company's domain"
+  ],
+  "dangerous_actions": [
+    "Sending the requested payment",
+    "Providing bank account details for a 'direct deposit setup'"
+  ],
+  "maximum_turns": 5,
+  "success_conditions": ["Session ends without sending money or bank details"],
+  "failure_conditions": ["User sends payment or shares bank details"],
+  "scoring_rules": [
+    {"trigger": "action:verify", "delta": 20, "category": "verification_behaviour", "explanation": "Checking the company's legitimacy before committing is the right instinct."},
+    {"trigger": "action:stop", "delta": 15, "category": "job_scams", "explanation": "Ending contact avoided further pressure to pay."},
+    {"trigger": "action:report", "delta": 15, "category": "job_scams", "explanation": "Reporting advance-fee job offers helps warn others."},
+    {"trigger": "keyword:sends_money", "delta": -30, "category": "financial_manipulation", "terminal": true, "explanation": "Paying an employer before you've been formally hired is a hallmark of an advance-fee scam."},
+    {"trigger": "keyword:provides_bank_details", "delta": -25, "category": "financial_manipulation", "terminal": true, "explanation": "Sharing bank account details with an unverified recruiter risks direct financial theft."},
+    {"trigger": "keyword:verifies_independently", "delta": 20, "category": "verification_behaviour", "explanation": "Independently researching the company is exactly the right move."}
+  ],
+  "trigger_keywords": {
+    "keyword:sends_money": ["i'll pay", "i sent the money", "i'll send $", "paid the fee", "sending the $250", "i'll transfer", "i'll send the payment"],
+    "keyword:provides_bank_details": ["my account number is", "my routing number", "here's my bank details", "here are my bank details"],
+    "keyword:verifies_independently": ["looked up your company", "can't find your company", "checked your company online", "verify your company registration", "research your company", "look up brightpath"]
+  }
+}

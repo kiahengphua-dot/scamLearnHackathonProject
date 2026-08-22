@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Test — ScamLearn{% endblock %}
+{% block content %}
+<section>
+    <h1>Test Mode</h1>
+    <div id="simulation-root"></div>
+</section>
+<script src="{{ url_for('static', filename='js/simulation.js') }}"></script>
+<script>
+    new ScamLearnSimulation(document.getElementById('simulation-root'), 'test');
+</script>
+{% endblock %}

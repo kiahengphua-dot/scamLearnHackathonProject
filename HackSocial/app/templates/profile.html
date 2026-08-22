@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}My Progress — ScamLearn{% endblock %}
+{% block content %}
+<section>
+    <h1>My Progress</h1>
+    <div id="profile-root"></div>
+</section>
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+<script>
+    new ProfileView(document.getElementById('profile-root'));
+</script>
+{% endblock %}

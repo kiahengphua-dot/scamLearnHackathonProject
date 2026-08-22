@@ -1,0 +1,62 @@
+{
+  "id": "family-impersonation-01",
+  "title": "Emergency From a New Number",
+  "category": "family_impersonation",
+  "difficulty": "intermediate",
+  "classification": "SCAM",
+  "base_risk": 70,
+  "context": "A text message claiming to be from a family member ('Ethan', a fictional nephew) texting from an unfamiliar number.",
+  "target_learning_objectives": [
+    "Recognize family-emergency impersonation scams",
+    "Learn to verify identity through a known channel before sending money"
+  ],
+  "manipulation_techniques": ["emotional_manipulation", "urgency", "secrecy"],
+  "allowed_stages": ["CONTACT", "RAPPORT", "REQUEST", "ESCALATION"],
+  "initial_message": "Hi, it's Ethan — I lost my phone so I'm texting from a friend's number. Can you talk for a sec?",
+  "script": [
+    {
+      "stage": "RAPPORT",
+      "message": "I'm really sorry to bother you, but I got into a small car accident and I need help right now. Please don't tell mom and dad yet, I don't want them to worry until I know more.",
+      "technique": "secrecy"
+    },
+    {
+      "stage": "REQUEST",
+      "message": "I need about $400 to cover the tow and release fee before they'll let me take the car. Could you send it as gift cards? It's the fastest way right now and I'll pay you back tonight.",
+      "technique": "emotional_manipulation"
+    },
+    {
+      "stage": "ESCALATION",
+      "message": "Please hurry, they're closing the office in 20 minutes. I'm really stressed out right now and you're the only one I can reach.",
+      "technique": "urgency"
+    }
+  ],
+  "expected_red_flags": [
+    "Contact from an unfamiliar number claiming to be a relative",
+    "Request to keep the situation secret from other family members",
+    "Request for gift cards, which are untraceable and irreversible"
+  ],
+  "safe_verification_actions": [
+    "Call the family member's real, known phone number to confirm",
+    "Ask a question only the real person would know the answer to"
+  ],
+  "dangerous_actions": [
+    "Purchasing and sending gift card codes",
+    "Sending money before verifying identity"
+  ],
+  "maximum_turns": 5,
+  "success_conditions": ["Session ends without sending money or gift cards"],
+  "failure_conditions": ["User sends gift cards or money"],
+  "scoring_rules": [
+    {"trigger": "action:verify", "delta": 20, "category": "verification_behaviour", "explanation": "Confirming identity through a known channel is the single most effective defense here."},
+    {"trigger": "action:stop", "delta": 15, "category": "emotional_manipulation", "explanation": "Pausing the conversation reduced the pressure to act immediately."},
+    {"trigger": "action:report", "delta": 10, "category": "emotional_manipulation", "explanation": "Reporting impersonation attempts helps carriers and platforms flag the number."},
+    {"trigger": "keyword:sends_giftcards", "delta": -30, "category": "financial_manipulation", "terminal": true, "explanation": "Gift card codes are untraceable and irreversible once shared — a favorite tool of impersonation scams."},
+    {"trigger": "keyword:sends_money", "delta": -30, "category": "financial_manipulation", "terminal": true, "explanation": "Sending money before verifying identity risks a real, hard-to-reverse loss."},
+    {"trigger": "keyword:verifies_independently", "delta": 20, "category": "verification_behaviour", "explanation": "Calling the person's known number is exactly how to confirm a real emergency."}
+  ],
+  "trigger_keywords": {
+    "keyword:sends_giftcards": ["i'll buy the gift cards", "bought the gift cards", "sent the gift card codes", "i'll send the codes", "i'll get the gift cards"],
+    "keyword:sends_money": ["i'll send the money", "i sent the money", "i'll wire", "i'll transfer the money"],
+    "keyword:verifies_independently": ["i'm calling ethan's actual number", "let me call your mom", "let me verify this is really you", "i'll call you on your real number", "calling your real number"]
+  }
+}

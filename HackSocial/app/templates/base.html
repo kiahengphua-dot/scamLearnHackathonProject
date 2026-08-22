@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ScamLearn{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('pages.home') }}">ScamLearn</a>
+        <nav>
+            <a href="{{ url_for('pages.train') }}">Train</a>
+            <a href="{{ url_for('pages.test_mode') }}">Test</a>
+            <a href="{{ url_for('pages.analyze') }}">Analyze</a>
+            <a href="{{ url_for('pages.profile') }}">My Progress</a>
+            <a href="{{ url_for('pages.about') }}">About</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

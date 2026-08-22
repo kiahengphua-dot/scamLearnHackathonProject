@@ -1,0 +1,67 @@
+{
+  "id": "investment-scam-01",
+  "title": "Exclusive Trading Group",
+  "category": "investment",
+  "difficulty": "advanced",
+  "classification": "SCAM",
+  "base_risk": 90,
+  "context": "A message from 'Alex', supposedly a member of an investment community, promoting a fictional platform called 'NovaYield Capital'.",
+  "target_learning_objectives": [
+    "Recognize guaranteed-return investment scams",
+    "Learn to verify financial platforms through official regulators, not testimonials"
+  ],
+  "manipulation_techniques": ["social_proof", "authority", "scarcity", "financial_pressure"],
+  "allowed_stages": ["CONTACT", "RAPPORT", "CREDIBILITY", "REQUEST", "ESCALATION"],
+  "initial_message": "Hey! Sorry for the random message — a mutual friend added you to our investing group. We've been using NovaYield Capital's trading bot and averaging 40% returns weekly. Wanted to loop you in before applications close.",
+  "script": [
+    {
+      "stage": "RAPPORT",
+      "message": "Here, I'll show you some screenshots from other members' accounts this week — everyone's seeing similar results. I can personally walk you through setting up your account if you're interested.",
+      "technique": "social_proof"
+    },
+    {
+      "stage": "CREDIBILITY",
+      "message": "NovaYield is fully licensed and the bot handles all the trading for you, so there's basically no risk on your end. Spots in this round are limited to people in our community only.",
+      "technique": "authority"
+    },
+    {
+      "stage": "REQUEST",
+      "message": "To lock in this week's returns, you'll need to deposit at least $500 in crypto to the community wallet address before the cutoff. I can send you the wallet address now.",
+      "technique": "financial_pressure"
+    },
+    {
+      "stage": "ESCALATION",
+      "message": "Just heads up, the cutoff is in 2 hours and three other members already secured their spot today. I really don't want you to miss this round.",
+      "technique": "scarcity"
+    }
+  ],
+  "expected_red_flags": [
+    "Guaranteed high weekly returns with 'no risk'",
+    "Pressure from a countdown and claims that others already paid",
+    "Request to send crypto to a personal wallet address, not a regulated brokerage"
+  ],
+  "safe_verification_actions": [
+    "Check the platform against your country's financial regulator's registry",
+    "Be skeptical of any investment promising guaranteed returns"
+  ],
+  "dangerous_actions": [
+    "Sending cryptocurrency to the provided wallet",
+    "Providing bank details to fund the 'investment'"
+  ],
+  "maximum_turns": 6,
+  "success_conditions": ["Session ends without sending funds"],
+  "failure_conditions": ["User sends crypto or bank details"],
+  "scoring_rules": [
+    {"trigger": "action:verify", "delta": 20, "category": "verification_behaviour", "explanation": "Checking the platform's regulatory status before investing is the critical step here."},
+    {"trigger": "action:stop", "delta": 15, "category": "investment_scams", "explanation": "Walking away avoided the financial risk entirely."},
+    {"trigger": "action:report", "delta": 15, "category": "investment_scams", "explanation": "Reporting investment scams helps protect others in the same group."},
+    {"trigger": "keyword:sends_crypto", "delta": -30, "category": "financial_manipulation", "terminal": true, "explanation": "Sending cryptocurrency is typically irreversible, making it a favorite tool for investment scams."},
+    {"trigger": "keyword:provides_bank_details", "delta": -25, "category": "financial_manipulation", "terminal": true, "explanation": "Sharing bank details with an unverified 'investment community' risks direct financial loss."},
+    {"trigger": "keyword:verifies_independently", "delta": 20, "category": "verification_behaviour", "explanation": "Checking a regulator's registry is exactly how legitimate investment platforms are verified."}
+  ],
+  "trigger_keywords": {
+    "keyword:sends_crypto": ["i'll send the crypto", "sent to the wallet", "transferred to the wallet", "i'll deposit", "sending crypto"],
+    "keyword:provides_bank_details": ["my account number is", "my routing number", "here's my bank details", "here are my bank details"],
+    "keyword:verifies_independently": ["checked the regulator's website", "this isn't a licensed firm", "looked up novayield", "can't verify this is licensed", "too good to be true", "sounds like a scam"]
+  }
+}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}ScamLearn — Don't just detect scams. Learn how scammers manipulate you.{% endblock %}
+{% block content %}
+<section class="hero">
+    <h1>ScamLearn</h1>
+    <p class="tagline">Don't just detect scams.<br>Learn how scammers manipulate you.</p>
+</section>
+
+<section class="mode-grid" aria-label="Choose how to start">
+    <a class="mode-card" href="{{ url_for('pages.train') }}">
+        <h2>Train</h2>
+        <p>Experience realistic AI scenarios.</p>
+    </a>
+    <a class="mode-card" href="{{ url_for('pages.test_mode') }}">
+        <h2>Test</h2>
+        <p>Can you tell scam from legitimate?</p>
+    </a>
+    <a class="mode-card" href="{{ url_for('pages.analyze') }}">
+        <h2>Analyze</h2>
+        <p>Bring a suspicious message, screenshot, or artifact.</p>
+    </a>
+</section>
+
+<section class="flow" aria-label="How ScamLearn works">
+    <ol class="flow-steps">
+        <li><span class="flow-step-label">Experience</span></li>
+        <li><span class="flow-step-label">Decide</span></li>
+        <li><span class="flow-step-label">Replay</span></li>
+        <li><span class="flow-step-label">Learn</span></li>
+    </ol>
+</section>
+{% endblock %}

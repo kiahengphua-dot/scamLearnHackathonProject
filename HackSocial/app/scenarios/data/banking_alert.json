@@ -1,0 +1,58 @@
+{
+  "id": "banking-alert-01",
+  "title": "Suspicious Sign-In Alert",
+  "category": "banking",
+  "difficulty": "beginner",
+  "classification": "SCAM",
+  "base_risk": 75,
+  "context": "A message claiming to be from a bank called 'Meridian Trust Bank' (fictional) about a suspicious sign-in attempt.",
+  "target_learning_objectives": [
+    "Recognize urgency-based banking scam messages",
+    "Understand why one-time passcodes must never be shared with anyone"
+  ],
+  "manipulation_techniques": ["urgency", "fear", "authority"],
+  "allowed_stages": ["CONTACT", "MANIPULATION", "REQUEST"],
+  "initial_message": "Meridian Trust Bank Alert: We detected a sign-in attempt on your account from an unrecognized device in another country. If this wasn't you, verify your identity immediately at secure-meridiantrust-verify.com to prevent your account from being locked.",
+  "script": [
+    {
+      "stage": "MANIPULATION",
+      "message": "This is a follow-up notice: your account will be permanently locked in 15 minutes unless this is confirmed. We've also flagged an unusual withdrawal attempt on your account.",
+      "technique": "urgency"
+    },
+    {
+      "stage": "REQUEST",
+      "message": "To cancel the lock, reply with the 6-digit verification code that was just sent to your phone, along with the last 4 digits of your card number.",
+      "technique": "credential_harvesting"
+    }
+  ],
+  "expected_red_flags": [
+    "Urgent countdown before account lockout",
+    "Unfamiliar domain in the verification link",
+    "Direct request for a one-time passcode"
+  ],
+  "safe_verification_actions": [
+    "Open the bank's official app directly instead of the link",
+    "Call the number printed on the back of your card"
+  ],
+  "dangerous_actions": [
+    "Clicking the provided link",
+    "Sharing the one-time passcode",
+    "Providing your card number"
+  ],
+  "maximum_turns": 4,
+  "success_conditions": ["Session ends without disclosing the OTP or card number"],
+  "failure_conditions": ["User provides the OTP or card number"],
+  "scoring_rules": [
+    {"trigger": "action:verify", "delta": 20, "category": "verification_behaviour", "explanation": "Choosing to verify independently instead of acting on the message directly."},
+    {"trigger": "action:stop", "delta": 15, "category": "verification_behaviour", "explanation": "Ending contact prevented further pressure."},
+    {"trigger": "action:report", "delta": 15, "category": "verification_behaviour", "explanation": "Reporting the message helps flag it for others."},
+    {"trigger": "keyword:provides_otp", "delta": -30, "category": "credential_harvesting", "terminal": true, "explanation": "Sharing a one-time passcode gives an attacker everything needed to take over the account."},
+    {"trigger": "keyword:clicks_link", "delta": -20, "category": "suspicious_links", "explanation": "Following an unfamiliar link is exactly what the scam is designed to make you do."},
+    {"trigger": "keyword:verifies_independently", "delta": 20, "category": "verification_behaviour", "explanation": "Contacting the bank through its official app or number is the safest response."}
+  ],
+  "trigger_keywords": {
+    "keyword:provides_otp": ["otp", "one-time code", "the code is", "verification code is", "6 digit code", "6-digit code"],
+    "keyword:clicks_link": ["i'll click", "i clicked", "opening the link", "i'll open the link", "clicking the link"],
+    "keyword:verifies_independently": ["call the bank", "official app", "bank's app", "official website", "hang up and call", "contact the bank directly"]
+  }
+}

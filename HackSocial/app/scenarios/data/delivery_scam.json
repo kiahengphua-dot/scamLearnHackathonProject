@@ -1,0 +1,51 @@
+{
+  "id": "delivery-scam-01",
+  "title": "Unpaid Customs Fee",
+  "category": "delivery",
+  "difficulty": "beginner",
+  "classification": "SCAM",
+  "base_risk": 55,
+  "context": "A text message claiming to be from a fictional courier, 'SwiftParcel Logistics', about an undelivered package.",
+  "target_learning_objectives": [
+    "Recognize small-fee delivery scams",
+    "Practice checking package status through official channels only"
+  ],
+  "manipulation_techniques": ["urgency", "scarcity"],
+  "allowed_stages": ["CONTACT", "REQUEST"],
+  "initial_message": "SwiftParcel Logistics: Your package could not be delivered due to an unpaid customs fee of $2.99. Pay now to reschedule delivery: swiftparcel-redeliver.com",
+  "script": [
+    {
+      "stage": "REQUEST",
+      "message": "To avoid your parcel being returned to sender within 24 hours, please confirm payment by entering your card details on the link above.",
+      "technique": "urgency"
+    }
+  ],
+  "expected_red_flags": [
+    "Unexpected package you weren't told about",
+    "Very small fee designed to seem trivial",
+    "External link not on the courier's real domain"
+  ],
+  "safe_verification_actions": [
+    "Track any expected packages directly on the courier's official website or app",
+    "Ignore fee requests from a package you weren't expecting"
+  ],
+  "dangerous_actions": [
+    "Entering card details on the linked page"
+  ],
+  "maximum_turns": 3,
+  "success_conditions": ["Session ends without providing card details"],
+  "failure_conditions": ["User provides card details"],
+  "scoring_rules": [
+    {"trigger": "action:verify", "delta": 20, "category": "verification_behaviour", "explanation": "Checking the courier's official tracking page instead of the link is the safe move."},
+    {"trigger": "action:stop", "delta": 15, "category": "suspicious_links", "explanation": "Not engaging further with the message avoided the risk entirely."},
+    {"trigger": "action:report", "delta": 15, "category": "suspicious_links", "explanation": "Reporting the message helps flag the scam domain."},
+    {"trigger": "keyword:provides_card_number", "delta": -25, "category": "financial_manipulation", "terminal": true, "explanation": "Entering card details on an unverified page exposes you to financial fraud."},
+    {"trigger": "keyword:clicks_link", "delta": -20, "category": "suspicious_links", "explanation": "Clicking the link is the first step the scam is designed to get you to take."},
+    {"trigger": "keyword:verifies_independently", "delta": 20, "category": "verification_behaviour", "explanation": "Checking directly with the courier rather than the link sidesteps the scam entirely."}
+  ],
+  "trigger_keywords": {
+    "keyword:provides_card_number": ["card number is", "my card number", "here's my card", "cvv is"],
+    "keyword:clicks_link": ["i'll click", "i clicked", "opening the link", "i'll pay on the link", "clicking the link"],
+    "keyword:verifies_independently": ["track my package directly", "check the courier's official site", "i didn't order anything", "i'm not expecting a package", "check on the official app"]
+  }
+}

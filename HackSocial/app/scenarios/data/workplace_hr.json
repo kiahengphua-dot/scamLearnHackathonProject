@@ -1,0 +1,39 @@
+{
+  "id": "workplace-hr-01",
+  "title": "Benefits Enrollment Reminder",
+  "category": "workplace",
+  "difficulty": "beginner",
+  "classification": "LEGITIMATE",
+  "base_risk": 10,
+  "context": "A routine internal HR notification from a fictional company, 'Alderbrook Manufacturing', about benefits enrollment.",
+  "target_learning_objectives": [
+    "Learn to distinguish legitimate internal communications from impersonation",
+    "Practice verifying without assuming malicious intent"
+  ],
+  "manipulation_techniques": [],
+  "allowed_stages": ["CONTACT", "REQUEST"],
+  "initial_message": "Hi team, this is a reminder from HR that open enrollment for benefits closes this Friday. Please log in to the employee portal (portal.alderbrook-internal.com, same as always) to review your selections. No action needed if you're keeping your current plan.",
+  "script": [
+    {
+      "stage": "REQUEST",
+      "message": "If you have questions about your options, you can reach HR directly at extension 4521 or stop by the HR office on the 3rd floor.",
+      "technique": ""
+    }
+  ],
+  "expected_red_flags": [],
+  "safe_verification_actions": [
+    "Log in via the portal address you already use, not a link from the message",
+    "Call HR's known extension directly if anything seems unclear"
+  ],
+  "dangerous_actions": [],
+  "maximum_turns": 3,
+  "success_conditions": ["User proceeds via the known internal portal without unnecessary alarm"],
+  "failure_conditions": ["User treats a routine internal notice as malicious without cause"],
+  "scoring_rules": [
+    {"trigger": "action:continue", "delta": 10, "category": "verification_behaviour", "explanation": "Proceeding was reasonable — this used the organization's known internal portal and made no unusual requests."},
+    {"trigger": "action:verify", "delta": 15, "category": "verification_behaviour", "explanation": "Double-checking is a good habit even when a message turns out to be legitimate."},
+    {"trigger": "action:stop", "delta": -10, "category": "verification_behaviour", "explanation": "Cutting off contact wasn't necessary here — nothing in the message indicated malicious intent."},
+    {"trigger": "action:report", "delta": -10, "category": "verification_behaviour", "explanation": "Reporting this to security spends their time on a legitimate message — save reporting for messages with real red flags."}
+  ],
+  "trigger_keywords": {}
+}

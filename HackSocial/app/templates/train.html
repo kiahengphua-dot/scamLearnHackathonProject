@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Train — ScamLearn{% endblock %}
+{% block content %}
+<section>
+    <h1>Training Mode</h1>
+    <p>Practice recognizing specific social-engineering techniques in a labeled simulation.</p>
+    <div id="simulation-root"></div>
+</section>
+<script src="{{ url_for('static', filename='js/simulation.js') }}"></script>
+<script>
+    var presetScenarioId = new URLSearchParams(window.location.search).get('scenario');
+    new ScamLearnSimulation(document.getElementById('simulation-root'), 'train', { scenarioId: presetScenarioId });
+</script>
+{% endblock %}

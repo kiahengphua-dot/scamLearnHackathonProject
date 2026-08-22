@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Analyze — ScamLearn{% endblock %}
+{% block content %}
+<section>
+    <h1>Analyze an Artifact</h1>
+    <p>Bring a suspicious message or a screenshot. ScamLearn reports the evidence it finds — not just a verdict — so you can decide for yourself. You can also turn what it finds into a practice scenario.</p>
+    <div id="analyze-root"></div>
+</section>
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+<script>
+    new ArtifactAnalyzer(document.getElementById('analyze-root'));
+</script>
+{% endblock %}
